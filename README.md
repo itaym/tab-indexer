@@ -49,17 +49,17 @@ Especially in `React` when you open a modal, and you move around with `TAB` or `
 **The solution** for the problem has been found in the manner of a `checker` function that can be passed to the `tabIndexer`. If the `checker` function returns zero or greater or true, `tabIndexer` will continue to do what it does best. **BUT** if the function returns less than zero or false `tabIndexer` will returns **-1**. For this to occur two methods exists: `setChecker` and `clearChecker`.
 ```HTML
 const Fn = () => {
-const checker = (context, currentValue, numerator) => {
-// you can do something with the currentValue and numerator
-// but for this example I'll use only the context
-return context === 'myContext';
-}
-tabIndexer`myContext{0}`;
-tabIndexer.setChecker(checker);
-return (
-<input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="1" */}
-<input ... tabIndex={tabIndexer`otherContext`} /> {/** tabindex="-1" */}
-);
+    const checker = (context, currentValue, numerator) => {
+        // you can do something with the currentValue and numerator
+        // but for this example I'll use only the context
+        return context === 'myContext';
+    }
+    tabIndexer`myContext{0}`;
+    tabIndexer.setChecker(checker);
+    return (
+        <input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="1" */}
+        <input ... tabIndex={tabIndexer`otherContext`} /> {/** tabindex="-1" */}
+    );
 };    
 ```
 So I put the `setChecker` in the function that opens the modal and the `clearChecker` in the function that closes it.
