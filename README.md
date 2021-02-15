@@ -45,7 +45,7 @@ const Fn = () => {
 };    
 ```
 #### Surprise surprise!!! The plot get a bit trickier
-Especially in `React` when you open a modal, and you move around with `TAB` or `SHIFT-TAB`. Because elements in the page keep their `tabIndex`, the `focus` navigates through all the elements and not just the elements you set `tabIndex` to in the modal. This is a **big problem**. So setting `tabIndex` to minos will solve this problem. `tabIndecies` with minos are ignored by the browser. This is good but now this little utility does not help because (once again) I have to start program this B.S.
+Especially in `React` when you open a modal, and you move around with `TAB` or `SHIFT-TAB`. Because elements in the page keep their `tabIndex`, the `focus` navigates through all the elements and not just the elements you set `tabIndex` to in the modal. This is a **big problem**. So setting `tabIndex` to minus will solve this problem. `tabIndecies` with minus are ignored by the browser. This is good but now this little utility does not help because (once again) I have to start program this B.S.
 **The solution** for the problem has been found in the manner of a `checker` function that can be passed to the `tabIndexer`. If the `checker` function returns zero or greater or true, `tabIndexer` will continue to do what it does best. **BUT** if the function returns less than zero or false `tabIndexer` will returns **-1**. For this to occur two methods exists: `setChecker` and `clearChecker`.
 ```HTML
 const Fn = () => {
