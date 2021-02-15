@@ -1,4 +1,4 @@
-import { ITabIndexer, IHashTable, checkerFunction } from "./module";
+import { ITabIndexer, IHashTable, ICheckerFunction } from "./module";
 
 const tabIndexer = function ():ITabIndexer {
 
@@ -28,7 +28,7 @@ const tabIndexer = function ():ITabIndexer {
         }
         return contexts[context] += numerators[context]
     }
-    indexer.setChecker = function (fn:checkerFunction):void {
+    indexer.setChecker = function (fn:ICheckerFunction):void {
         checker = fn
     }
     indexer.clearChecker = function ():void {
