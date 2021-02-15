@@ -9,7 +9,3 @@ export interface checkerFunction {
 export interface IHashTable {
   [key: string]: number;
 }
-
-// export interface AnyAttrProps extends PropsWithChildren<any> {
-//   attributes: IAnyAttrOptions;
-// }
