@@ -6,11 +6,10 @@ const tabIndexer = function ():ITabIndexer {
         GLOBAL_CHECKER = 0,
         CONTEXT_CHECKER = 1
     }
-    const
-        contexts:IHashTable = {},
-        numerators:IHashTable = {},
-        checkerFns:IHashTable = {},
-        checkerFunction:ICheckerFunction = function () { return true }
+    const contexts:IHashTable = {}
+    const numerators:IHashTable = {}
+    const checkerFns:IHashTable = {}
+    const checkerFunction:ICheckerFunction = function () { return true }
     let checker:ICheckerFunction = checkerFunction
 
     function executeChecker(
