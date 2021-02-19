@@ -1,6 +1,6 @@
 {
   "name": "tab-indexer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tab indexer counter with context to make tabIndex settings in a project easy.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -20,6 +20,7 @@
     "url": "git+https://github.com/itaym/tab-indexer.git"
   },
   "keywords": [
+    "tab",
     "tabIndex",
     "HTML",
     "utility",

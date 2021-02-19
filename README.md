@@ -22,26 +22,26 @@ tabIndexer`context${initValue}${numerator}`;
 ```
 ```HTML
 const Fn = () =>
-    <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="1" */}
-    <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="2" */}
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="1" */}
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="2" */}
 ```
 ```HTML
 const Fn = () => {
-    tabIndexer`context${100}`;
-    return (
-        <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="101" */}
-        <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="102" */}
-    );
+tabIndexer`context${100}`;
+return (
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="101" */}
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="102" */}
+);
 };    
 ```
 ```HTML
 const Fn = () => {
-    tabIndexer`context${0}${100}`;
-    return (
-        <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="100" */}
-        <input ... tabIndex={tabIndexer`context`} /> {/** tabindex="200" */}
-        <input ... tabIndex={tabIndexer`other`} /> {/** tabindex="1" */}
-    );
+tabIndexer`context${0}${100}`;
+return (
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="100" */}
+<input ... tabIndex={tabIndexer`context`} /> {/** tabindex="200" */}
+<input ... tabIndex={tabIndexer`other`} /> {/** tabindex="1" */}
+);
 };    
 ```
 #### Surprise surprise!!! The plot get a bit trickier
@@ -49,22 +49,55 @@ Especially in `React` when you open a modal, and you move around with `TAB` or `
 **The solution** for the problem has been found in the manner of a `checker` function that can be passed to the `tabIndexer`. If the `checker` function returns zero or greater or true, `tabIndexer` will continue to do what it does best. **BUT** if the function returns less than zero or false `tabIndexer` will returns **-1**. For this to occur two methods exists: `setChecker` and `clearChecker`.
 ```HTML
 const Fn = () => {
-    const checker = (context, currentValue, numerator) => {
-        // you can do something with the currentValue and numerator
-        // but for this example I'll use only the context
-        return context === 'myContext';
-    }
-    tabIndexer`myContext{0}`;
-    tabIndexer.setChecker(checker);
-    return (
-        <input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="1" */}
-        <input ... tabIndex={tabIndexer`otherContext`} /> {/** tabindex="-1" */}
-    );
+const checker = (context, currentValue, numerator) => {
+// you can do something with the currentValue and numerator
+// but for this example I'll use only the context
+return context === 'myContext';
+}
+tabIndexer`myContext{0}`;
+tabIndexer.setChecker(checker);
+return (
+<input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="1" */}
+<input ... tabIndex={tabIndexer`otherContext`} /> {/** tabindex="-1" */}
+);
+};    
+```
+```HTML
+const Fn = () => {
+// Somewhere else
+tabIndexer.clearChecker();
 };    
 ```
 So I put the `setChecker` in the function that opens the modal and the `clearChecker` in the function that closes it.
 **PROBLEM SOLVED**
 In general, I set for every region of the system a different initial number from small to large. `tabIndex` values don't have to be in sequence, they can jump from 1000 to 2000, and it will work fine.
+
+**For more complex use** of the ``setChecker`` / ``clearChecker``. It may be used regarding a context. In that manner the ``checker`` function receives two parameters: ``currentValue`` and ``numerator``. (Because the ``context`` should be known to it).
+The syntax is in ``Tag`` function:
+```HTML
+const Fn = () => {
+    const checker = (currentValue, numerator) => {
+        // Let's say we want to skip values
+        return ((currentValue + numerator) % 2) -1;
+    }
+    tabIndexer`myContext{0}`;
+    tabIndexer.setChecker`myContext${checker}`;
+    return (
+        <input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="1" */}
+        <input ... tabIndex={tabIndexer`myContext`} /> {/** tabindex="-1" */}
+    );
+};    
+```
+```HTML
+const Fn = () => {
+    // Somewhere else
+    tabIndexer.clearChecker`myContext`;
+};    
+```
+------------
+#### Note
+
+The global ``checker`` function is precedence to the ``context`` ``checker`` function.
 
 ------------
 ## Have a good productive day :)

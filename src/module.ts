@@ -1,11 +1,13 @@
 export interface ITabIndexer {
   (strings:TemplateStringsArray, num?:number, numerator?:number):number
-  setChecker(fn:ICheckerFunction):void
-  clearChecker():void
+  setChecker(stringsOrFn:TemplateStringsArray|ICheckerFunction, fn?:ICheckerFunction):void
+  clearChecker(strings?:TemplateStringsArray):void
 }
-export type ICheckerFunction =
-  (context?: string, currentValue?: number, numerator?:number) => number|boolean
+export interface ICheckerFunction {
+  (currentValue: number, numerator:number):number|boolean
+  (context: string, currentValue: number, numerator:number):number|boolean
 
+}
 export interface IHashTable {
-  [key: string]: number;
+  [key: string]: any;
 }
